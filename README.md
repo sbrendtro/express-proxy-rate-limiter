@@ -28,6 +28,23 @@ node dist/index.js
 We have created an example `docker-compose.yml` config that provides both 
 redis server, as well as a Node 18 image for the app.
 
+```
+docker-compose up -d
+```
+
+Or use the image `sbrendtro/express-proxy-rate-limiter:latest` in your own
+docker compose, Dockerfile, etc.
+
+
+#### Config Using Environment Variables
+By setting environment variables, you can override the JSON config file 
+settings. This can be helpful when using our Docker image:
+
+- RATELIMITER_BACKEND_URL=https://your.server:8000
+- RATELIMITER_REDIS_URL=redis://your.redis.server:6379
+- RATELIMITER_WINDOW_MS=60000
+- RATELIMITER_MAX=100
+
 ## Config Options
 The configuration file can be found here:
 

@@ -16,7 +16,8 @@ const proxyConfig = config.get('proxy');
     // Create a `node-redis` client
     const client = createClient({
         // Apply our local config
-        ...redisConfig
+        ...redisConfig,
+        url: process.env.RATELIMITER_REDIS_URL ?? redisConfig.url
         // ... (see https://github.com/redis/node-redis/blob/master/docs/client-configuration.md)
     });
 
@@ -28,6 +29,10 @@ const proxyConfig = config.get('proxy');
         // Apply our local config
         ...limiterConfig,
 
+        // Allow overrides with env vars
+        windowMs: process.env.RATELIMITER_WINDOW_MS ?? limiterConfig.windowMs,
+        max: process.env.RATELIMITER_MAX ?? limiterConfig.max,
+
         // Redis store configuration
         store: new RedisStore({
         sendCommand: (...args: string[]) => client.sendCommand(args),
@@ -36,12 +41,12 @@ const proxyConfig = config.get('proxy');
     app.use(limiter);
 
     // Set up the proxy backend
-    app.use('/', proxy(proxyConfig.backendUrl, {
+    app.use('/', proxy(process.env.RATELIMITER_BACKEND_URL ?? proxyConfig.backendUrl, {
         ...proxyConfig.options,
         filter: function(req, res) {
             return proxyConfig.verbs.includes(req.method);
         }
     }))
 
-    app.listen(proxyConfig.frontendPort)
+    app.listen(process.env.RATELIMITER_FRONTEND_PORT ?? proxyConfig.frontendPort)
 })();
