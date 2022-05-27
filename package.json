@@ -1,0 +1,35 @@
+{
+  "name": "express-rate-limiting-proxy",
+  "version": "1.0.0",
+  "description": "A simple rate-limiting proxy based on express.",
+  "main": "dist/index.js",
+  
+  "scripts": {
+    "build": "tsc --build",
+    "start": "tsc && node dist/index.js",
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name" : "Steven Brendtro",
+    "url" : "https://github.com/sbrendtro/"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.27",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "typescript": "^4.6.3"
+  },
+  "bugs": {
+    "url" : "https://github.com/sbrendtro/express-rate-limiting-proxy/issues",
+  },
+  "dependencies": {
+    "config": "^3.3.7",
+    "express-http-proxy": "^1.6.3",
+    "express-rate-limit": "^6.4.0",
+    "rate-limit-redis": "^3.0.1",
+    "redis": "^4.1.0"
+  }
+}

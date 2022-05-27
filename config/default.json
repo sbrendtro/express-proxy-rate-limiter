@@ -1,0 +1,17 @@
+{
+    "proxy": {
+        "frontendPort": 3000,
+        "backendUrl": "https://localhost:8000",
+        "options": {},
+        "verbs": [ "GET", "POST", "PUT", "HEAD", "DELETE" ]
+    },
+    "redis": {
+        "url": "redis://redis:6379"
+    },
+    "limiter": {
+        "windowMs": 60000,
+        "max": 100,
+        "standardHeaders": true,
+        "legacyHeaders": false
+    }
+  }
