@@ -10,8 +10,14 @@ services:
       - redis
     ports:
       - 3001:3000
-  
-  redis:
+    environment:
+      - RATELIMITER_BACKEND_URL=https://your.server:8000
+      - RATELIMITER_REDIS_URL=redis://redis-service:6379
+      - RATELIMITER_WINDOW_MS=60000
+      - RATELIMITER_MAX=100
+      - RATELIMITER_FRONTEND_PORT=3000
+
+  redis-service:
     container_name: redis
     image: redis
     restart: always

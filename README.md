@@ -44,6 +44,7 @@ settings. This can be helpful when using our Docker image:
 - RATELIMITER_REDIS_URL=redis://your.redis.server:6379
 - RATELIMITER_WINDOW_MS=60000
 - RATELIMITER_MAX=100
+- RATELIMITER_FRONTEND_PORT=3000
 
 ## Config Options
 The configuration file can be found here:
