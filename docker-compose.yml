@@ -3,22 +3,22 @@ version: '3.7'
 services:
 
   limiter:
-    container_name: limiter
     build:
       context: .
     depends_on:
-      - redis
+      - redis-service-rate-limiter
     ports:
-      - 3001:3000
+      - 3000:3000
     environment:
       - RATELIMITER_BACKEND_URL=https://your.server:8000
-      - RATELIMITER_REDIS_URL=redis://redis-service:6379
+      - RATELIMITER_REDIS_URL=redis://redis-service-rate-limiter:6379
       - RATELIMITER_WINDOW_MS=60000
       - RATELIMITER_MAX=100
       - RATELIMITER_FRONTEND_PORT=3000
+      - RATELIMITER_VERBS=["GET","POST"]
 
-  redis-service:
-    container_name: redis
+  redis-service-rate-limiter:
+    container_name: redis-service-rate-limiter
     image: redis
     restart: always
     ports:

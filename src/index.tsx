@@ -1,13 +1,16 @@
-import express from "express"
+import express from "express";
 import rateLimit from "express-rate-limit";
 import proxy from "express-http-proxy";
 import RedisStore from "rate-limit-redis";
 import { createClient } from "redis";
-import config from 'config'
+import config from 'config';
 
 const redisConfig = config.get('redis');
 const limiterConfig = config.get('limiter');
 const proxyConfig = config.get('proxy');
+
+const verbs = process.env.RATELIMITER_VERBS ? JSON.parse(process.env.RATELIMITER_VERBS) : proxyConfig.verbs;
+
 
 (async () => {
     // Express app
@@ -44,7 +47,7 @@ const proxyConfig = config.get('proxy');
     app.use('/', proxy(process.env.RATELIMITER_BACKEND_URL ?? proxyConfig.backendUrl, {
         ...proxyConfig.options,
         filter: function(req, res) {
-            return proxyConfig.verbs.includes(req.method);
+            return verbs.includes(req.method);
         }
     }))
 
