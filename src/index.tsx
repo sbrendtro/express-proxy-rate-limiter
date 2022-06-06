@@ -8,6 +8,7 @@ import config from 'config';
 const redisConfig = config.get('redis');
 const limiterConfig = config.get('limiter');
 const proxyConfig = config.get('proxy');
+const proxyHeaders = config.get('proxyHeaders');
 
 const verbs = process.env.RATELIMITER_VERBS ? JSON.parse(process.env.RATELIMITER_VERBS) : proxyConfig.verbs;
 
@@ -48,6 +49,10 @@ const verbs = process.env.RATELIMITER_VERBS ? JSON.parse(process.env.RATELIMITER
         ...proxyConfig.options,
         filter: function(req, res) {
             return verbs.includes(req.method);
+        },
+        proxyReqOptDecorator: function(proxyReqOpts, originalReq) {
+            Object.keys(proxyHeaders).map(k => { proxyReqOpts.headers[k] = proxyHeaders[k] })
+            return proxyReqOpts;
         }
     }))
 

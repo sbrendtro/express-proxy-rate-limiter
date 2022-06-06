@@ -66,7 +66,8 @@ config/default.json
         "max": 100,
         "standardHeaders": true,
         "legacyHeaders": false
-    }
+    },
+    "proxyHeaders": {}    
   }
 ```
 
@@ -116,3 +117,14 @@ Option to return rate limit info in the `RateLimit-*` headers
 
 #### legacyHeaders
 Option to return rate limit info on the `X-RateLimit-*` headers
+
+
+### - proxyHeaders
+Additional headers to be added on proxy request. This can be useful for passing authorization, CORS, cookies, etc., without exposing them to the frontend.
+
+```
+  "proxyHeaders": {
+      "Authorization": "Basic <TOKEN>",
+      "Cookie": "name=value; name2=value2; name3=value3"
+  }
+```
